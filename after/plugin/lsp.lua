@@ -1,19 +1,29 @@
 local lsp = require("lsp-zero")
-local ENSURE_INSTALLED_LANG = {
-    'javascript', 'html',
-    'typescript',
-    'lua',
-    'json',
-    'css'
-}
+
 local ENSURE_INSTALLED_LANG_SERV = {
     'jsonls',
     'tsserver',
-    'eslint', 
+    'eslint',
     'cssls',
     'tailwindcss',
-    'custom_elements_ls'
+    'custom_elements_ls',
+    'lua_ls',
+    'pyre',
 }
+
+local ENSURE_INSTALLED_MASON = {
+    'jsonls',
+    'tsserver',
+    'eslint',
+    'cssls',
+    'tailwindcss',
+    'custom_elements_ls',
+    'lua_ls',
+    'prettier',
+    'pyre',
+    'djlint'
+}
+
 
 lsp.preset("recommended")
 lsp.ensure_installed(ENSURE_INSTALLED_LANG_SERV)
@@ -61,23 +71,13 @@ lsp.on_attach(function(client, bufnr)
 end)
 
 
-lsp.format_mapping('gq', {
-  format_opts = {
-    async = false,
-    timeout_ms = 10000,
-  },
-  servers = {
-    ['null-ls'] = ENSURE_INSTALLED_LANG,
-  }
-})
-
 lsp.format_on_save({
   format_opts = {
     async = false,
     timeout_ms = 10000,
   },
   servers = {
-    ['null-ls'] = ENSURE_INSTALLED_LANG,
+    ['null-ls'] = {'javascript', 'typescript', 'lua', 'tsserver', },
   }
 })
 
@@ -96,8 +96,9 @@ null_ls.setup({
   }
 })
 
+
 require('mason-null-ls').setup({
-  ensure_installed = nil,
+  ensure_installed = ENSURE_INSTALLED_MASON,
   automatic_installation = true,
 })
 
