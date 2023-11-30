@@ -13,8 +13,6 @@ return require('packer').startup(function(use)
 	}
 	use "olimorris/onedarkpro.nvim"
 	use ('nvim-treesitter/nvim-treesitter', { run = ':TSUpdate' })
-	use ('nvim-treesitter/playground')
-	use ('ThePrimeagen/harpoon')
 	use ('mbbill/undotree')
 	use ('tpope/vim-fugitive')
 	use {
@@ -42,4 +40,12 @@ return require('packer').startup(function(use)
      use ('jiangmiao/auto-pairs')
      use ('jose-elias-alvarez/null-ls.nvim')
      use ('jay-babu/mason-null-ls.nvim')
+     use ('ryanoasis/vim-devicons')
+     use ('onsails/lspkind.nvim')
+     use {
+         'laytan/tailwind-sorter.nvim',
+         requires = {'nvim-treesitter/nvim-treesitter', 'nvim-lua/plenary.nvim'},
+         config = function() require('tailwind-sorter').setup() end,
+         run = 'cd formatter && npm i && npm run build',
+         }
 end)

@@ -1,4 +1,3 @@
-require("zen-mode").toggle()
 
 vim.keymap.set("n", "<leader>zz", function()
     require("zen-mode").setup {
