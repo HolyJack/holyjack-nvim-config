@@ -13,6 +13,7 @@ require("nvim-treesitter.configs").setup({
 		"query",
 		"typescript",
 		"python",
+		"terraform",
 	},
 
 	-- Install parsers synchronously (only applied to `ensure_installed`)
