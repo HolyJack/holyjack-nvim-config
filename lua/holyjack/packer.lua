@@ -16,17 +16,18 @@ return require("packer").startup(function(use)
 	use("olimorris/onedarkpro.nvim")
 	use("mbbill/undotree")
 	use("itchyny/lightline.vim")
-  -- zen mode for neovim 
+	-- zen mode for neovim
 	use("folke/zen-mode.nvim")
-  -- LSP configuration
+	-- LSP configuration
 	use({ "neovim/nvim-lspconfig", "williamboman/mason.nvim", "williamboman/mason-lspconfig.nvim" })
-  -- Autocompletion https://github.com/hrsh7th/nvim-cmp
-  use({"hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-buffer", "hrsh7th/cmp-path", "hrsh7th/cmp-cmdline", "hrsh7th/nvim-cmp" })
-  use({
-	  "L3MON4D3/LuaSnip",
-	  -- follow latest release.
-	  tag = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
-	  -- install jsregexp (optional!:).
-      run = "make install_jsregexp"
-  })
+	-- Autocompletion https://github.com/hrsh7th/nvim-cmp
+	use({ "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-buffer", "hrsh7th/cmp-path", "hrsh7th/cmp-cmdline", "hrsh7th/nvim-cmp" })
+	use({
+		"L3MON4D3/LuaSnip",
+		-- follow latest release.
+		tag = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+		-- install jsregexp (optional!:).
+		run = "make install_jsregexp",
+	})
+	use({ "sbdchd/neoformat" })
 end)
