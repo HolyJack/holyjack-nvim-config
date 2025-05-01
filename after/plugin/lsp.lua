@@ -1,4 +1,3 @@
--- Available LSP servers https://github.com/williamboman/mason-lspconfig.nvim
 local ENSURE_INSTALLED = {
 	"dockerls",
 	"docker_compose_language_service",
@@ -8,20 +7,16 @@ local ENSURE_INSTALLED = {
 	"jsonls",
 	"tailwindcss",
 	"terraformls",
-	"tsserver",
 	"jedi_language_server",
 	"gopls",
 }
 
 -- Reference https://rishabhrd.github.io/jekyll/update/2020/09/19/nvim_lsp_config.html
 local map = function(type, key, value)
-	vim.fn.nvim_buf_set_keymap(0, type, key, value, { noremap = true, silent = true })
+	vim.api.nvim_buf_set_keymap(0, type, key, value, { noremap = true, silent = true })
 end
 
 local custom_attach = function(client)
-	require("completion").on_attach(client)
-	require("diagnostic").on_attach(client)
-
 	map("n", "gD", "<cmd>lua vim.lsp.buf.declaration()<CR>")
 	map("n", "gd", "<cmd>lua vim.lsp.buf.definition()<CR>")
 	map("n", "K", "<cmd>lua vim.lsp.buf.hover()<CR>")
@@ -39,20 +34,24 @@ local custom_attach = function(client)
 end
 
 local capabilities = require("cmp_nvim_lsp").default_capabilities()
-
-require("mason").setup()
-require("mason-lspconfig").setup({
-	ensure_installed = ENSURE_INSTALLED,
-})
-require("mason-lspconfig").setup_handlers({
+local handlers = {
 	-- The first entry (without a key) will be the default handler
 	-- and will be called for each installed server that doesn't have
 	-- a dedicated handler.
 	function(server_name) -- default handler (optional)
 		require("lspconfig")[server_name].setup({
 			on_attach = custom_attach,
-			-- capabilities=capabilities
+			capabilities = capabilities,
+			settings = {
+				gopls = {
+					usePlaceholders = true,
+				},
+			},
 		})
 	end,
 	-- Next, you can provide a dedicated handler for specific servers.
-})
+}
+
+require("mason").setup()
+require("mason-lspconfig").setup({ ensure_installed = ENSURE_INSTALLED })
+require("mason-lspconfig").setup_handlers(handlers)

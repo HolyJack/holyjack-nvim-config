@@ -1,3 +1,4 @@
+-- Available LSP servers https://github.com/williamboman/mason-lspconfig.nvim
 local cmp = require("cmp")
 local luasnip = require("luasnip")
 
@@ -31,16 +32,21 @@ local cmp_mappings = cmp.mapping.preset.insert({
 cmp_mappings["<Space>"] = nil
 
 cmp.setup({
-  snippet = {
-    expand = function(args)
-      luasnip.lsp_expand(args.body)
-    end,
-  },
-  window = {
-  },
-  mapping = cmp_mappings,
-  sources = cmp.config.sources({
-    { name = "nvim_lsp" },
-    { name = "luasnip" },
-  })
+	snippet = {
+		expand = function(args)
+			luasnip.lsp_expand(args.body)
+		end,
+	},
+	window = {
+		completion = cmp.config.window.bordered(),
+	},
+	mapping = cmp_mappings,
+	sources = cmp.config.sources({
+		{ name = "nvim_lsp" },
+		{ name = "luasnip" },
+		{ name = "buffer" },
+	}),
+	experimental = {
+		ghost_text = true,
+	},
 })
